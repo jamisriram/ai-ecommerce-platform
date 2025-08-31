@@ -1,0 +1,15 @@
+Flask
+Flask-Cors
+psycopg2-binary
+pandas
+scikit-learn
+tensorflow
+transformers
+torch
+torchvision
+torchaudio
+pillow
+requests
+python-dotenv
+tf-keras
+gunicorn
