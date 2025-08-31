@@ -1,4 +1,4 @@
-import os # Make sure os is imported at the top
+import os
 import pickle
 from flask import Flask, request, jsonify
 from flask_cors import CORS
@@ -35,8 +35,14 @@ sentiment_pipeline = pipeline(
     framework="pt"
 )
 
+# NEW HEALTH CHECK ROUTE
+@app.route('/health')
+def health_check():
+    return "OK", 200
+
 @app.route('/recommend/content-based', methods=['POST'])
 def recommend_content_based():
+    # ... (rest of the function)
     data = request.get_json()
     product_id = data.get('product_id')
     
@@ -55,8 +61,10 @@ def recommend_content_based():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+
 @app.route('/search/image', methods=['POST'])
 def search_by_image():
+    # ... (rest of the function)
     if 'file' not in request.files:
         return jsonify({"error": "No file part"}), 400
     file = request.files['file']
@@ -85,6 +93,7 @@ def search_by_image():
 
 @app.route('/analyze/sentiment', methods=['POST'])
 def analyze_sentiment():
+    # ... (rest of the function)
     data = request.get_json()
     text = data.get('text')
     if not text:
@@ -98,9 +107,6 @@ def analyze_sentiment():
     
     return jsonify({"label": label, "score": sentiment_score})
 
-
 if __name__ == '__main__':
-    # Get the port from the environment variable Render provides, default to 5002 for local dev
     port = int(os.environ.get('PORT', 5002))
-    # Run the app and make it accessible from outside the container (host='0.0.0.0')
     app.run(host='0.0.0.0', port=port)
