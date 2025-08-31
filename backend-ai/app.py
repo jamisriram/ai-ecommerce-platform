@@ -1,4 +1,4 @@
-import os
+import os # Make sure os is imported at the top
 import pickle
 from flask import Flask, request, jsonify
 from flask_cors import CORS
@@ -6,7 +6,7 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from transformers import pipeline
-from utils.image_feature_extractor import get_feature_extractor # Re-use function
+from utils.image_feature_extractor import get_feature_extractor
 from PIL import Image
 from io import BytesIO
 import numpy as np
@@ -28,19 +28,18 @@ with open("image_features.pkl", "rb") as f:
     image_features = pickle.load(f)
 image_feature_extractor = get_feature_extractor()
 
-# Sentiment Analysis Model - NOW EXPLICITLY USING PYTORCH
+# Sentiment Analysis Model
 sentiment_pipeline = pipeline(
     "sentiment-analysis", 
     model="distilbert-base-uncased-finetuned-sst-2-english", 
-    framework="pt"  # <-- ✅ This is the crucial fix
+    framework="pt"
 )
-
 
 @app.route('/recommend/content-based', methods=['POST'])
 def recommend_content_based():
     data = request.get_json()
     product_id = data.get('product_id')
-
+    
     if not product_id:
         return jsonify({"error": "Product ID is required"}), 400
 
@@ -50,7 +49,7 @@ def recommend_content_based():
         sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
         sim_scores = sim_scores[1:6]
         product_indices = [i[0] for i in sim_scores]
-
+        
         recommended_ids = products_df['product_id'].iloc[product_indices].tolist()
         return jsonify(recommended_ids)
     except Exception as e:
@@ -61,7 +60,7 @@ def search_by_image():
     if 'file' not in request.files:
         return jsonify({"error": "No file part"}), 400
     file = request.files['file']
-
+    
     try:
         from tensorflow.keras.preprocessing import image
         from tensorflow.keras.applications.resnet50 import preprocess_input
@@ -76,10 +75,10 @@ def search_by_image():
         for pid, features in image_features.items():
             sim = cosine_similarity(uploaded_features.reshape(1, -1), features.reshape(1, -1))[0][0]
             similarities[pid] = sim
-
+        
         sorted_pids = sorted(similarities, key=similarities.get, reverse=True)
         top_5_pids = [str(pid) for pid in sorted_pids[:5]]
-
+        
         return jsonify(top_5_pids)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -90,15 +89,18 @@ def analyze_sentiment():
     text = data.get('text')
     if not text:
         return jsonify({"error": "Text is required"}), 400
-
+    
     result = sentiment_pipeline(text)[0]
     score = result['score']
     label = result['label']
-
+    
     sentiment_score = score if label == 'POSITIVE' else 1 - score
-
+    
     return jsonify({"label": label, "score": sentiment_score})
 
 
 if __name__ == '__main__':
-    app.run(port=5002, debug=False)
+    # Get the port from the environment variable Render provides, default to 5002 for local dev
+    port = int(os.environ.get('PORT', 5002))
+    # Run the app and make it accessible from outside the container (host='0.0.0.0')
+    app.run(host='0.0.0.0', port=port)
