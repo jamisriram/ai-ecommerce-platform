@@ -1,0 +1,108 @@
+.pageTitle {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+}
+.emptyCart {
+    background: var(--card-background);
+    padding: 2rem;
+    text-align: center;
+    font-size: 1.2rem;
+    border-radius: 8px;
+}
+.cartLayout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    align-items: flex-start;
+}
+.cartItems {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+.cartItem {
+    display: flex;
+    background: var(--card-background);
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    align-items: center;
+}
+.itemImage {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin-right: 1.5rem;
+}
+.itemDetails {
+    flex-grow: 1;
+}
+.itemName {
+    font-weight: 600;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 1.1rem;
+}
+.itemPrice {
+    color: #555;
+}
+.itemActions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+.qtySelect {
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+.removeButton {
+    background: transparent;
+    border: none;
+    color: #e74c3c;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+.cartSummary {
+    background: var(--card-background);
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+}
+.cartSummary h2 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    border-bottom: 1px solid #eee;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+.summaryRow {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+.checkoutButton {
+    width: 100%;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.checkoutButton:hover {
+    background-color: var(--secondary-color);
+}
+@media (max-width: 900px) {
+    .cartLayout {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,49 @@
+.layout {
+    display: flex;
+    min-height: calc(100vh - 100px); /* Adjust based on header/footer height */
+}
+
+.sidebar {
+    width: 240px;
+    flex-shrink: 0;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 1.5rem;
+}
+
+.sidebarTitle {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.sidebarNav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.navLink, .activeLink {
+    color: #bdc3c7;
+    text-decoration: none;
+    padding: 0.8rem 1rem;
+    border-radius: 5px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    font-weight: 500;
+}
+
+.navLink:hover {
+    background-color: #34495e;
+    color: white;
+}
+
+.activeLink {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.mainContent {
+    flex-grow: 1;
+    padding: 2rem;
+    background-color: #ecf0f1;
+}

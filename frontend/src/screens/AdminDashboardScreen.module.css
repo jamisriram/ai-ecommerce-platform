@@ -1,0 +1,30 @@
+.pageTitle {
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.statCard {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+}
+
+.statCard h2 {
+    margin-top: 0;
+    font-size: 1.2rem;
+    color: #7f8c8d;
+}
+
+.statCard p {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 0;
+}

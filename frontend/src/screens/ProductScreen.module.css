@@ -1,0 +1,236 @@
+/* --- TOP SECTION: PRODUCT DETAILS --- */
+.backLink {
+  color: #555;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-block;
+  margin-bottom: 1.5rem;
+}
+.detailsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-bottom: 4rem; /* Add space between details and lower section */
+}
+@media (min-width: 768px) {
+  .detailsGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+}
+.imageColumn {
+  background-color: var(--card-background);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  box-shadow: var(--shadow);
+}
+.productImage {
+  max-height: 500px;
+  width: 100%;
+  object-fit: contain;
+}
+.detailsColumn {
+  display: flex;
+  flex-direction: column;
+}
+.productTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+.productBrand {
+  font-size: 1.1rem;
+  color: #777;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.productPrice {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--text-color);
+  margin-bottom: 1rem;
+}
+.productDescription {
+  line-height: 1.6;
+  color: #555;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+.addToCartSection {
+  background: var(--card-background);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+.status {
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+.qtySelector {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.qtySelector span {
+  font-weight: 500;
+}
+.qtySelector select {
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+.addToCartButton {
+  width: 100%;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--primary-color);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.addToCartButton:hover {
+  background-color: var(--secondary-color);
+}
+.addToCartButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* --- SENTIMENT STYLES --- */
+.sentiment {
+  margin-bottom: 1rem;
+}
+.sentimentText {
+  font-weight: 600;
+  color: #555;
+  font-size: 0.9rem;
+}
+.sentimentBar {
+  width: 100%;
+  height: 8px;
+  background-color: #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 0.25rem;
+}
+.sentimentFill {
+  height: 100%;
+  background-color: #28a745;
+  border-radius: 4px;
+  transition: width 0.5s ease-in-out;
+}
+
+/* --- UPGRADED BOTTOM SECTION --- */
+.bottomSection {
+  border-top: 1px solid #e0e0e0;
+  padding-top: 3rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+}
+@media (min-width: 992px) {
+  .bottomSection {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+.sectionTitle {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: var(--primary-color);
+  border-bottom: 2px solid var(--secondary-color);
+  padding-bottom: 0.5rem;
+  display: inline-block;
+}
+.productsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.reviewList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+.reviewItem {
+  background: var(--card-background);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+.reviewHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.25rem;
+}
+.reviewHeader strong {
+    font-size: 1.1rem;
+    color: var(--primary-color);
+}
+.reviewDate {
+    font-size: 0.8rem;
+    color: #777;
+    margin-bottom: 0.5rem;
+}
+.reviewForm {
+  background: #fdfdfd;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #eee;
+}
+.formGroup {
+  margin-bottom: 1rem;
+}
+.formGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+.formGroup select, .formGroup textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+.submitButton {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--primary-color);
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.submitButton:hover {
+  background-color: var(--secondary-color);
+}
+.deleteButton {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8rem;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.deleteButton:hover {
+    background-color: #c0392b;
+}

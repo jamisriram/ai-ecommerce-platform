@@ -1,0 +1,13 @@
+.formGroup {
+    margin: 2rem 0;
+}
+.formGroup label {
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+}
+.formGroup input {
+    margin-right: 1rem;
+    width: 20px;
+    height: 20px;
+}
