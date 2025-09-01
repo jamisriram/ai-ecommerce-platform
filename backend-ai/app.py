@@ -14,35 +14,26 @@ import numpy as np
 app = Flask(__name__)
 CORS(app)
 
-# --- Load Pre-computed Data & Models on Startup ---
+# --- Load only the FAST data on startup ---
 products_df = pd.read_pickle("product_data.pkl")
 products_df['product_id'] = products_df['product_id'].astype(str)
 
-# Content-Based Model
+# Content-Based Model (this is fast)
 tfidf = TfidfVectorizer(stop_words='english')
 tfidf_matrix = tfidf.fit_transform(products_df['description'].fillna(''))
 cosine_sim_content = cosine_similarity(tfidf_matrix, tfidf_matrix)
 
-# Image Search Model
-with open("image_features.pkl", "rb") as f:
-    image_features = pickle.load(f)
-image_feature_extractor = get_feature_extractor()
+# --- Initialize heavy AI models as None. They will be loaded on the first request. ---
+image_feature_extractor = None
+sentiment_pipeline = None
 
-# Sentiment Analysis Model
-sentiment_pipeline = pipeline(
-    "sentiment-analysis", 
-    model="distilbert-base-uncased-finetuned-sst-2-english", 
-    framework="pt"
-)
-
-# NEW HEALTH CHECK ROUTE
 @app.route('/health')
 def health_check():
+    # This will now respond instantly because the heavy models are not loaded on startup
     return "OK", 200
 
 @app.route('/recommend/content-based', methods=['POST'])
 def recommend_content_based():
-    # ... (rest of the function)
     data = request.get_json()
     product_id = data.get('product_id')
     
@@ -61,10 +52,18 @@ def recommend_content_based():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-
 @app.route('/search/image', methods=['POST'])
 def search_by_image():
-    # ... (rest of the function)
+    global image_feature_extractor
+    # LAZY LOADING: Load the model only if it hasn't been loaded yet
+    if image_feature_extractor is None:
+        print("Loading Image Search model for the first time...")
+        with open("image_features.pkl", "rb") as f:
+            global image_features # Make sure this is also global
+            image_features = pickle.load(f)
+        image_feature_extractor = get_feature_extractor()
+        print("Image Search model loaded.")
+
     if 'file' not in request.files:
         return jsonify({"error": "No file part"}), 400
     file = request.files['file']
@@ -93,7 +92,17 @@ def search_by_image():
 
 @app.route('/analyze/sentiment', methods=['POST'])
 def analyze_sentiment():
-    # ... (rest of the function)
+    global sentiment_pipeline
+    # LAZY LOADING: Load the model only if it hasn't been loaded yet
+    if sentiment_pipeline is None:
+        print("Loading Sentiment Analysis model for the first time...")
+        sentiment_pipeline = pipeline(
+            "sentiment-analysis", 
+            model="distilbert-base-uncased-finetuned-sst-2-english", 
+            framework="pt"
+        )
+        print("Sentiment Analysis model loaded.")
+
     data = request.get_json()
     text = data.get('text')
     if not text:
